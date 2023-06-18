@@ -6,11 +6,11 @@ public class Librarian : Person
 {
     public Librarian(string name, int id) : base(name, id) { }
 
-    public override void AddBook() { }
+    public override void Add() { }
 
-    public override void RemoveBook() { }
+    public override void Remove() { }
 
-    public override void EditBook() { }
+    public override void Edit() { }
 
 }
 

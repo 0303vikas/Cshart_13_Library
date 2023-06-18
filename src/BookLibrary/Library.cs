@@ -7,47 +7,49 @@ namespace src.BookLibrary;
 //    - Add, Remove, Edit `Person` objects
 public class Library
 {
-    private List<Person> _users { get; set; }
-    private List<Book> _books;
+    public List<Person> Users { get; set; }
+    public List<Book> Books;
+
+
 
     public Library()
     {
-        _users = new List<Person>();
-        _books = new List<Book>();
+        Users = new List<Person>();
+        Books = new List<Book>();
     }
 
     public Library(Person person) : this()
     {
-        _users.Add(person);
+        Users.Add(person);
 
     }
 
     public Library(Book book) : this()
     {
-        _books.Add(book);
+        Books.Add(book);
     }
 
-    public virtual void AddBook()
+    public virtual void Add()
     {
 
     }
 
-    public virtual void RemoveBook()
+    public virtual void Remove()
     {
 
     }
 
-    public virtual void BorrowBook()
+    public virtual void Borrow()
     {
 
     }
 
-    public virtual void ReturnBook()
+    public virtual void Return()
     {
 
     }
 
-    public virtual void EditBook() { }
+    public virtual void Edit() { }
 
 
     public virtual void AddPerson()
