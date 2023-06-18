@@ -1,17 +1,30 @@
-namespace Library;
+using src.User;
+using src.Product;
 
-
+namespace src.BookLibrary;
 // 1. `Library` should manage the collection of Book objects, and `Person` objects.This class should have following methods:
 //    - Add, Remove, Borrow, and Return books
 //    - Add, Remove, Edit `Person` objects
 public class Library
 {
-    private List<Person> _users;
+    private List<Person> _users { get; set; }
     private List<Book> _books;
 
-    private Library()
+    public Library()
     {
+        _users = new List<Person>();
+        _books = new List<Book>();
+    }
 
+    public Library(Person person) : this()
+    {
+        _users.Add(person);
+
+    }
+
+    public Library(Book book) : this()
+    {
+        _books.Add(book);
     }
 
     public virtual void AddBook()
@@ -34,6 +47,9 @@ public class Library
 
     }
 
+    public virtual void EditBook() { }
+
+
     public virtual void AddPerson()
     {
 
@@ -54,3 +70,5 @@ public class Library
         return base.ToString();
     }
 }
+
+
