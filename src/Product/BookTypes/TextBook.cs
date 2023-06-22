@@ -1,17 +1,17 @@
+using System.Text;
 using src.Interfaces;
 namespace src.Product;
 
-public class TextBook : Book, IBorrowable, IPrintable
+public class TextBook : Book, IPrintable
 {
     public int Pages { get; set; }
-    public TextBook(string title, string author, int isbn, string year, int pages) : base(title, author, isbn, year, true, true)
+
+    const bool IsBorrowable = true;
+    const bool IsPrintable = true;
+
+    public TextBook(string title, string author, int isbn, string year, int pages) : base(title, author, isbn, year, IsBorrowable, IsPrintable)
     {
         Pages = pages;
-    }
-
-    public override void Borrow()
-    {
-        throw new NotImplementedException();
     }
 
     public void PrintPages(int startPage, int endPage)
@@ -25,11 +25,6 @@ public class TextBook : Book, IBorrowable, IPrintable
             /// throw new out of limit
         }
         Console.WriteLine($"Printing Pages from {startPage} to {endPage}");
-    }
-
-    public override void Return()
-    {
-        throw new NotImplementedException();
     }
 
     public override void PrintInfo()

@@ -4,7 +4,10 @@ namespace src.Product;
 public class ResearchPaper : Book, IPrintable
 {
     public int Pages { get; set; }
-    public ResearchPaper(string title, string author, int isbn, string year, int pages) : base(title, author, isbn, year, false, true)
+    const bool IsBorrowable = false;
+    const bool IsPrintable = true;
+
+    public ResearchPaper(string title, string author, int isbn, string year, int pages) : base(title, author, isbn, year, IsBorrowable, IsPrintable)
     {
         Pages = pages;
     }

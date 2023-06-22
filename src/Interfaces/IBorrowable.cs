@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace src.Interfaces;
 
 public interface IBorrowable
 {
-    void Borrow();
-    void Return();
-
+    public void AddBorrowerId(int id);
+    public void ResetBorrowerId();
 }

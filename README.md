@@ -6,28 +6,145 @@ The goal of this assignment is to implement a basic Library Management System as
 
 A library has books and users. Users can be either cutomers or librarians. Librarians can add or remove books from the library and also can issue books to customers. Customers can request to borrow or return books. Also, library can have different types of books (Comic, Novel, TextBook, ResearchPaper) as well.
 
-Your job is to model this system using classes, interfaces, and/or abstract classes as you see fit.
+## Installation
 
-## Features
+Use this command to install dependencies and run the program.
 
-1. `Library` should manage the collection of Book objects, and `Person` objects. This class should have following methods:
-   - Add, Remove, Borrow, and Return books
-   - Add, Remove, Edit `Person` objects
-2. `Person` has properties such as Name and ID. `Customer` and `Librarian` should inherit from this class and have additional properties/features:
-   - `Customer` can Borrow and Return books.
-   - `Librarian` can Add, Remove, Edit books.
-3. `Book` has properties like Title, Author, ISBN, PublicationYear, CanBorrow, and CanPrint. To simplify the logic, we can consider each book an unique record with unique ISBN in the `Library`. In addition, `Book` has `PrintInfo()` method to print information about each book (uses `Console.WriteLine`). `Comic`, `Novel`, `TextBook`, and `ResearchPaper`should inherit properties from `Book` and have additional properties/features:
-   - `Comic` has `Artist`, `Novel` has `Genre`
-   - `Comic`, `Novel`, `TextBook` can be borrowed, but `ResearchPaper` cannot. If books are borrowable, they should have both `Borrow()` and `Return()` method
-   - `TextBook`, and `ResearchPaper` can be printed (to certain amount of pages), but `Comic`, `Novel` cannot. The `PrintPages(int startPage, endPage)`method uses `Console.WriteLine` to inform the start page and end page to be printed, in case the amount of to-be-printed pages do not exceed the maximum allowed pages.
-   - `Comic`and `Novel` should have different implementations of `PrintInfo()` with extra information about the extra properties, while `TextBook`, and `ResearchPaper` have default implementation.
+```bash
+dotnet restore
+dotnet run
+```
 
-## Requirements
+## Usage
 
-1. Encapsulation: Use proper encapsulation for the fields in your classes. Use access modifiers to limit the access to the class members.
+```c#
+# create class instance, Users
+Library library = Library.Instance();
+Customer customer1 = new Customer("Helga", 10);
+Customer customer2 = new Customer("bilbin", 11);
+Customer customerUpdate = new Customer("UpdatedBilin", 11);
 
-2. Abstraction: Use abstract classes/interfaces where necessary. Think about what methods are common to certain objects and could be abstracted into a superclass or interface.
+Librarian librarian1 = new Librarian("Employee1", 12838);
+Librarian librarian2 = new Librarian("Employee2", 29839);
 
-3. Inheritance: Make use of inheritance. There should be a clear hierarchy and use of both base and derived classes.
+// add User
+Library.AddPerson(customer1);
+Library.AddPerson(customer2);
 
-4. Polymorphism: Your program should utilize polymorphism, allowing objects to decide which methods should be invoked.
+Library.AddPerson(librarian1);
+Library.AddPerson(librarian2);
+
+Library.PrintUserList(librarian1.Id);
+```
+
+![Creating New Customer and Librarian](./src/Results/AddUsers.png)
+
+```c#
+# create books instance and add them to Library
+
+// creating Books
+Comic comic1 = new Comic("Comic1", "Comic1Author", 183747, "June 2023", "Comic1Artist");
+Comic comic2 = new Comic("Comic2", "Comic2Author", 183728, "June 2023", "Comic2Artist");
+Comic commic2Updated = new Comic("Comic2Updated", "Comic2AuthorUpdated", 183728, "June 2023", "Comic2ArtistUpdated");
+
+Novel novel1 = new Novel("Novel1", "Novel1Author", 183929, "June 2023", "Novel1Genre");
+Novel novel2 = new Novel("Novel2", "Novel2Author", 183978, "June 2023", "Novel2Genre");
+
+ResearchPaper researchPaper1 = new ResearchPaper("paper1", "paper1Author", 783923, "June 2023", 100);
+ResearchPaper researchPaper2 = new ResearchPaper("paper2", "paper2Author", 783928, "June 2023", 80);
+
+TextBook textBook1 = new TextBook("book1", "book1author", 283928, "June 2023", 400);
+TextBook textBook2 = new TextBook("book2", "book2author", 283988, "June 2023", 250);
+
+//Add Books with Librarien id
+// Adding Books with user id will give error
+
+Console.WriteLine(library);
+Library.Add(comic1, librarian1.Id);
+Library.Add(comic2, librarian2.Id);
+
+Library.Add(novel1, librarian1.Id);
+Library.Add(novel2, librarian1.Id);
+
+Library.Add(researchPaper1, librarian1.Id);
+Library.Add(researchPaper2, librarian1.Id);
+
+
+Library.Add(textBook1, librarian2.Id);
+Library.Add(textBook2, librarian2.Id);
+
+Console.WriteLine(library);
+```
+
+![Creating Books and Adding](./src/Results/AddBooks.png)
+
+```c#
+# Borrow and Return books
+
+// Borrow Book and Return with Libraray class
+
+Library.Borrow(comic1, customer1.Id);
+//Library.Borrow(comic1, customer2.Id); // can't borrow the book, book not available error.
+Library.Return(comic1, customer1.Id);
+
+// Borrow and return with customer class
+comic1.PrintInfo();
+customer1.Borrow(comic1);
+comic1.PrintInfo();
+customer1.Return(comic1);
+comic1.PrintInfo();
+```
+
+![Borrow and return Books](./src/Results/BorrowAndREturn.png)
+
+```c#
+# Remove a book from Library
+
+//Remove a book
+Console.WriteLine(library);
+Library.Remove(comic1, librarian1.Id);
+Library.Remove(novel1, librarian1.Id);
+Console.WriteLine(library);
+
+```
+
+![Remove a book result](./src/Results/RemoveBook.png)
+
+```c#
+# Edit a book from Library
+//Edit a book
+Console.WriteLine(library);
+Library.Edit(comic2, commic2Updated, librarian1.Id);
+Console.WriteLine(library);
+
+```
+
+![Edit Book result](./src/Results/UpdateBook.png)
+
+```c#
+# Remove a user
+//old State
+Library.PrintUserList(librarian1.Id);
+
+// Remove
+Library.RemovePerson(customer2);
+
+//updated State
+Library.PrintUserList(librarian1.Id);
+```
+
+![Remove User Result](./src/Results/RemoveUser.png)
+
+```c#
+# Update a user
+//old State
+Library.PrintUserList(librarian1.Id);
+
+// Edit
+Library.EditPerson(customer2, customerUpdate);
+
+//updated State
+Library.PrintUserList(librarian1.Id);
+```
+
+![Update User Result](./src/Results/UpdatePerson.png)
